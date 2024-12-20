@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `material`(
     `estoqueMinimo_material` INT NOT NULL,
     `estoqueTotal_material` INT NOT NULL,
     
-    PRIMARY KEY(`id_material`),
+    PRIMARY KEY(`id_material`)
 );
 -- A terminar
 CREATE TABLE IF NOT EXISTS `atividade_funcionario`(
