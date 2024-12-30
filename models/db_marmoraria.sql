@@ -7,7 +7,7 @@ USE db_marmoraria;
 
 CREATE TABLE IF NOT EXISTS `status`(
 	`id_status` INT AUTO_INCREMENT NOT NULL,
-    `nome_staus` VARCHAR(50) NOT NULL,
+    `nome_status` VARCHAR(50) NOT NULL,
     PRIMARY KEY(`id_status`)
 );
 
@@ -226,16 +226,102 @@ CREATE TABLE IF NOT EXISTS `pagamento`(
 */
 
 DELIMITER //
-CREATE TRIGGER `tr_insertBefore_funcionario`
+CREATE TRIGGER `tr_beforeInsert_funcionario`
 BEFORE INSERT ON `funcionario`
 FOR EACH ROW
 BEGIN
+	DECLARE mensagem VARCHAR(1500);
+    
+	IF LENGTH(NEW.`cpf_funcionario`) != 11 THEN
+		SET mensagem = CONCAT("CPF inválido! ( ", NEW.`cpf_funcionario`, " );");
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
+    
+	IF LENGTH(NEW.`nome_funcionario`) < 3 THEN
+		SET mensagem = CONCAT("Nome inválido! ", IF(LENGTH(NEW.`nome_funcionario`) = 0, "O nome está vazio;", "O nome possui menos de 3 caracteres;"));
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
+    
+    IF NEW.`dataNascimento_funcionario` >= NEW.`dataEfetivacao_funcionario` THEN
+		SET mensagem = CONCAT("Data de nascimento e/ou efeticação inválidas!
+							Data de nasciemnto: ", NEW.`dataNascimento_funcionario`, ", Data de efetivação: ", NEW.`dataEfetivacao_funcionario`, ";");
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
 END//
+
+CREATE TRIGGER `tr_beforeInsert_cliente`
+BEFORE INSERT ON `cliente` 
+FOR EACH ROW
+BEGIN 
+	DECLARE mensagem VARCHAR(1500);
+    
+    IF LENGTH(NEW.`nome_cliente`) < 3 THEN
+		SET mensagem = CONCAT("Nome inválido! ", IF(LENGTH(NEW.`nome_funcionario`) = 0, "O nome está vazio;", "O nome possui menos de 3 caracteres;"));
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
+    
+    IF LENGTH(NEW.`cpf_cliente`) != 11 THEN
+		SET mensagem = CONCAT("CPF inválido! ( ", NEW.`cpf_cliente`, " );");
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
+    
+    IF LENGTH(NEW.`cnpj_cliente`) != 14 THEN
+		SET mensagem = CONCAT("CNPJ inválido! ( ", NEW.`cnpj_cliente`, " );");
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+    END IF;
+    
+    IF NEW.`cnpj_cliente` IS NULL AND NEW.`cpf_cliente` IS NULL THEN
+		SET mensagem = CONCAT("Os campos CPF e CNPJ são ambos nulos!");
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
+    
+    IF NEW.`telefone_cliente` IS NULL OR NEW.`telefone_cliente` != 13 THEN
+		SET mensagem = CONCAT("Telefone inválido! ( ", NEW.`telefone_cliente`, " );");
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
+    
+    IF NEW.`whatsapp_cliente` IS NULL OR NEW.`whatsapp_cliente` != 13 THEN
+		SET mensagem = CONCAT("Telefone inválido! ( ", NEW.`whatsapp_cliente`, " );");
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
+    
+    IF NEW.`dataNascimento_cliente` > NOW() OR NOW() - NEW.`dataNascimento_cliente` >= 125 THEN
+		SET mensagem = CONCAT("Data de nascimento inválida ( ", NEW.`dataNascimento_cliente`, " );");
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = mensagem;
+	END IF;
+END //
+
+
+CREATE TRIGGER `tr_beforeInsert_material`
+BEFORE INSERT ON `material`
+FOR EACH ROW
+BEGIN
+	
+END //
 DELIMITER ;
-
-
-
 
 /*
 	TRIGGERS
 */
+/*
+	INSERTS
+*/
+	INSERT INTO `status`(`nome_status`)
+	VALUES
+    ("Ok"),
+    ("Estoque baixo");
+/*
+	INSERTS
+*/
+/*
+	ALTER TABLES
+*/
+ALTER TABLE `cliente`
+ CHANGE COLUMN `dataNascimento_cliente` `dataNascimento_cliente` DATE NOT NULL;
+
+ALTER TABLE `status`
+	CHANGE COLUMN `nome_staus` `nome_status` VARCHAR(50);
+/*
+	ALTER TABLES
+*/
+
