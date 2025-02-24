@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Materiais - Marmoraria</title>
+    <link rel="stylesheet" href="CadastroMaterial.css"> 
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro de Materiais</h2>
+        <form action="#" method="post">
+            <div class="campo">
+                <label for="nome">Nome do Material:</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="campo">
+                <label for="tipo">Tipo do Material:</label>
+                <select id="tipo" name="tipo">
+                    <option value="granito">Granito</option>
+                    <option value="mármore">Mármore</option>
+                    <option value="quartzo">Quartzo</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="cor">Cor:</label>
+                <input type="text" id="cor" name="cor" required>
+            </div>
+
+            <div class="campo">
+                <label for="espessura">Espessura (mm):</label>
+                <input type="number" id="espessura" name="espessura" required>
+            </div>
+
+            <div class="campo">
+                <label for="preco">Preço por metro quadrado (R$):</label>
+                <input type="number" id="preco" name="preco" step="0.01" required>
+            </div>
+
+            <div class="campo">
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="4"></textarea>
+            </div>
+
+            <button type="button">Cadastrar Material</button>
+        </form>
+    </div>
+</body>
+</html>
