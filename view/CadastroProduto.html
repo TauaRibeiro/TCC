@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Materiais - Marmoraria</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro de Materiais</h2>
+        <form action="#" method="post">
+            <label for="codigo"><p>Código do Produto:</p></label>
+            <input type="text" id="codigo" name="codigo" readonly>
+            
+            <label for="material"><p>Nome do Material:</p></label>
+            <input type="text" id="material" name="material" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" title="Apenas letras e espaços são permitidos.">
+            
+            <label for="cor"><p>Cor:</p></label>
+            <input type="text" id="cor" name="cor" required pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" title="Apenas letras e espaços são permitidos.">
+            
+            <label for="preco"><p>Preço por m²</p> (R$):</label>
+            <input type="number" id="preco" name="preco" step="0.01" min="0" required title="O preço deve ser um número positivo.">
+            
+            <label for="quantidade"><p>Quantidade em estoque:</p></label>
+            <input type="number" id="quantidade" name="quantidade" min="0" required title="A quantidade deve ser um número não negativo.">
+            
+            <button type="submit"><p>Cadastrar</p></button>
+        </form>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
