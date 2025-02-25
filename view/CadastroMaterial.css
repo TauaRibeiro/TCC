@@ -25,19 +25,60 @@ body {
 
 /* Alinha os campos e rótulos um abaixo do outro */
 .campo {
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 15px; /* Espaçamento entre os campos */
 }
 
-/* Estiliza os campos de entrada */
+/* Estiliza o título */
+h2 {
+    text-align: center;
+    margin-top: 20px; /* Deixa o título com uma margem em cima */
+}
+
+/* Estiliza o formulário */
+form {
+    background: rgba(0, 0, 0, 0.7); /* Mantém o fundo escuro */
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 100px auto 0 auto; /* Desce todo o formulário, mantendo o título fixo */
+    text-align: left;
+}
+
+
 input, select, textarea {
-    width: 100%;
+    width: 100%;  /* Faz todos os campos ocuparem a mesma largura */
+    height: 40px; /* Mantém todos com a mesma altura */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    box-sizing: border-box; /* Evita que o padding altere o tamanho real */
 }
+
+/* Ajusta especificamente o select para remover o recuo */
+select {
+    padding-right: 8px; /* Reduz o espaço interno à direita */
+    background-position: right 8px center; /* Ajusta a posição da seta */
+}
+
+
+
+/* Ajusta o campo de descrição */
+textarea {
+    height: 80px; /* Aumente esse valor conforme necessário */
+    resize: none; /* Impede o redimensionamento manual */
+    width: 100%; /* Mantém a largura igual aos outros campos */
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+
 
 /* Ajuste do botão */
 button {
